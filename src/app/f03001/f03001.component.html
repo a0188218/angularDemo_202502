@@ -1,0 +1,30 @@
+<app-block *ngIf="block"></app-block>
+<div class="bankground_color">
+  <br>
+  <div class="card_no_padding">
+    <div class="form_header_title">名單匯入上傳</div>
+    <div style="padding:10px">
+      <form class="mat-dialog-content  nz-row" [formGroup]="uploadForm" class="mat-dialog-content"
+        #formControl="ngForm">
+        <div nz-col nzSpan="24">
+          <div class="form">
+            <div><span class="form-title">上傳檔案</span>
+              <input type="file" (change)="onChange($event)">
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="24">
+          <div class="form">
+            <div><span class="form-title">上傳異常訊息</span>
+              <textarea matInput class="input-textarea" formControlName="ERROR_MESSAGE" readonly></textarea>
+              <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="button-group" style="text-align: center;">
+          <button nz-button [nzSize]="'middle'" nzType="primary" (click)="confirmAdd()" [disabled]="!formControl.valid"
+            style="margin:0px 5px">儲存</button>
+        </div>
+      </form>
+    </div>
+  </div>

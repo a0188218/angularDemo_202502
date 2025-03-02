@@ -1,0 +1,108 @@
+<div class="bankground_color">
+  <br>
+  <div nz-row class="search_row">
+    <th style="padding-left: 30px; font-size: 20px; color: #1890ff;">📂 審核案件清單（共 {{ this.total }} 件）</th>
+    <div class="search_row_header">
+      <div nz-col>
+        <div nz-row [nzGutter]="16">
+          <!-- 收件編號 -->
+          <div nz-col nzFlex="1">
+            <span class="form-title">收件編號</span>
+            <div class="form-group">
+              <input matInput class="form-control" [(ngModel)]="receiptNo" name="receiptNo" placeholder="輸入收件編號">
+            </div>
+          </div>
+          <!-- 身分證號 -->
+          <div nz-col nzFlex="1">
+            <span class="form-title">身分證號</span>
+            <div class="form-group">
+              <input matInput class="form-control" [(ngModel)]="idNumber" name="idNumber" placeholder="輸入身分證號">
+            </div>
+          </div>
+          <!-- 客戶ID -->
+          <div nz-col nzFlex="1">
+            <span class="form-title">客戶ID</span>
+            <div class="form-group">
+              <input matInput class="form-control" [(ngModel)]="custId" name="custId" placeholder="輸入客戶ID">
+            </div>
+          </div>
+          <!-- 產品類別 -->
+          <div nz-col nzFlex="1">
+            <span class="form-title">產品類別</span>
+            <mat-select [(ngModel)]="prodName" name="prodName" class="mat-select" nzPlaceHolder="選擇產品類別">
+              <mat-option *ngFor="let code of productList" [value]="code.value">
+                {{ code.value + " - " + code.viewValue }}
+              </mat-option>
+            </mat-select>
+          </div>
+
+          <!-- 查詢按鈕 -->
+          <div nz-col nzSpan="2" style="margin-top:18px;">
+            <button nz-button nzType="primary" nzSize="large" nzShape="round" (click)="select()">查詢案件</button>
+          </div>
+          <!-- 清除按鈕 -->
+          <div nz-col nzSpan="2" style="margin-top:18px;">
+            <button nz-button nzDanger nzSize="large" nzShape="round" (click)="clear()">清除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 表格區域 -->
+  <div class="content">
+    <div #absBox class="abs-box">
+      <div nz-col nzSpan="24">
+        <div class="card_no_padding">
+          <nz-table nzShowSizeChanger [nzData]="newData" [nzFrontPagination]="false" [nzSimple]="true"
+            [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" #middleTable nzSize="middle"
+            [nzBordered]="true" [nzScroll]="{ x: '1600px', y:tableHeight}" (nzQueryParams)="onQueryParamsChange($event)">
+            <thead>
+              <tr>
+                <th nzWidth="60px" nzLeft>No</th>
+                <th nzWidth="120px" [nzSortFn]="true" (nzSortOrderChange)="sortChange($event, 'startTime')" nzLeft>進件日期時間</th>
+                <th nzWidth="160px" [nzSortFn]="false" (nzSortOrderChange)="sortChange($event, 'receiptNo')" nzLeft>收件編號</th>
+                <th nzWidth="90px">重查完成</th>
+                <th>身分證號</th>
+                <th>客戶ID</th>
+                <th>姓名</th>
+                <th>公司名稱</th>
+                <th>產品名稱</th>
+                <th>申請金額</th>
+                <th>審核結果</th>
+                <th>通知</th>
+                <th nzWidth="140px" nzRight>案件註記</th>
+                <th nzRight>儲存</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let data of newData; let i = index">
+                <td nzAlign="center" nzLeft>{{ i+1 }}</td>
+                <td nzLeft>{{ data.startTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td nzLeft>{{ data.receiptNo }}</td>
+                <td>{{ data.readyForReview }}</td>
+                <td>{{ data.nationalId }}</td>
+                <td>{{ data.custId }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.company }}</td>
+                <td>{{ data.prodCode }}</td>
+                <td>{{ data.applyAmount }}</td>
+                <td>{{ data.reviewResult }}</td>
+                <td style="text-align: center;">
+                  <button nz-button nzSize='small' nzType="primary" (click)="openNotifyMsg(data.receiptNo)">通知</button>
+                </td>
+                <td nzRight>
+                  <input matInput class="form-control" [(ngModel)]="data.caseNote" placeholder="請輸入註記">
+                </td>
+                <td nzRight>
+                  <button nz-button nzType="primary" nzSize='small' (click)="saveNote(data.receiptNo, data.caseNote)">儲存</button>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

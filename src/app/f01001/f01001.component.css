@@ -1,0 +1,45 @@
+.mat-column-user {
+  max-width: 100px;
+}
+
+.mat-header-cell.mat-column-user {
+  color: red;
+}
+
+.mat-cell.mat-column-user {
+  font-weight: bold;
+  text-decoration: underline dashed #000;
+  cursor: pointer;
+}
+
+.table-data{
+  background-color:white;
+  text-align: center;
+  border: 1px solid #e8e8e8;
+  color:black;
+  margin-bottom: 1px;
+  font-size: 14px;
+}
+
+.table-header{
+  background-color:#ededed;
+  text-align: center;
+  color:#848E9C;
+  margin-bottom: 1px;
+  font-size: 14px;
+}
+
+.input{
+  background-color:#ffffff;
+  border-radius: 5px;
+  height:30px;
+  width:100%;
+  border: 1px solid #c9c9c9;
+}
+.form-title{
+  color:#2E4765;
+  font-weight: 500;
+  display:block;
+}
+
+
